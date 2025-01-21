@@ -1,27 +1,32 @@
 <?php
+session_name('ejercicio_texto');
 session_start();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $text = trim($_POST['text']);
+$texto = '';
+if (isset($_POST['texto'])) {
+    $texto = trim($_POST['texto']);
+}
 
-    if (!empty($text)) {
-        $_SESSION['text'] = $text;
-        $message = "Texto recibido: " . htmlspecialchars($text);
-    } else {
-        $message = "No se ha escrito ningún texto.";
-    }
+if (empty($texto)) {
+    $mensaje = "No se ha escrito ningún texto en el formulario.";
 } else {
-    $message = "Acceso directo sin enviar formulario.";
+    $mensaje = "Se ha escrito el siguiente texto: " . htmlspecialchars($texto);
+    $_SESSION['texto'] = $texto;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>Segunda Página</title>
+    <title>Página 2 - Resultado</title>
 </head>
+
 <body>
-    <p><?php echo $message; ?></p>
-    <a href="index.php">Volver a la primera página</a>
+    <h1>Resultado</h1>
+    <p><?php echo $mensaje; ?></p>
+    <a href="pagina1.php">Volver a la página 1</a>
 </body>
+
 </html>
